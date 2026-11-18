@@ -1,0 +1,49 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}SolaRythm{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+  <nav class="nav">
+    <div>
+      <a class="brand" href="{% url 'dashboard' %}">SolaRythm</a>
+      {% if user.is_authenticated %}
+        {% if user.role == 'ADMIN' %}
+          <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+        {% else %}
+          <a href="{% url 'member_dashboard' %}">My Dashboard</a>
+        {% endif %}
+        <a href="{% url 'profile' %}">Profile</a>
+      {% endif %}
+    </div>
+    <div class="nav-right">
+      {% if user.is_authenticated %}
+        <span>Hi, {{ user.first_name|default:user.username }} <span class="badge">{{ user.get_role_display }}</span></span>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn-link">Log out</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}">Log in</a>
+        <a href="{% url 'signup' %}">Sign up</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>&copy; SolaRythm. All rights reserved.</footer>
+</body>
+</html>
