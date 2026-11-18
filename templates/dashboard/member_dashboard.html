@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard | SolaRythm{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Welcome, {{ user.first_name|default:user.username }}!</h2>
+  <p class="muted">This is your member dashboard.</p>
+</div>
+<div class="stats">
+  <div class="stat"><b>{{ user.get_role_display }}</b>Role</div>
+  <div class="stat"><b>{{ user.date_joined|date:"M d, Y" }}</b>Joined</div>
+  <div class="stat"><b>{{ user.last_login|date:"M d, Y" }}</b>Last login</div>
+</div>
+<div class="card">
+  <h2>Quick links</h2>
+  <p><a href="{% url 'profile' %}">View my profile</a> &middot; <a href="{% url 'profile_edit' %}">Edit my profile</a></p>
+</div>
+{% endblock %}

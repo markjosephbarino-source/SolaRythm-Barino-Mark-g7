@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard | SolaRythm{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Admin Dashboard</h2>
+  <p class="muted">Welcome, {{ user.first_name|default:user.username }}. You are managing SolaRythm.</p>
+</div>
+<div class="stats">
+  <div class="stat"><b>{{ total_users }}</b>Total users</div>
+  <div class="stat"><b>{{ member_count }}</b>Members</div>
+  <div class="stat"><b>{{ admin_count }}</b>Admins</div>
+</div>
+<div class="card">
+  <h2>Newest accounts</h2>
+  <table>
+    <tr><th>Username</th><th>Email</th><th>Role</th><th>Joined</th></tr>
+    {% for u in recent_users %}
+      <tr><td>{{ u.username }}</td><td>{{ u.email }}</td><td>{{ u.get_role_display }}</td><td>{{ u.date_joined|date:"M d, Y" }}</td></tr>
+    {% endfor %}
+  </table>
+  <p><a class="btn" href="{% url 'admin:accounts_customuser_changelist' %}">Manage users</a></p>
+</div>
+{% endblock %}

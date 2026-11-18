@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Access denied | SolaRythm{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>403 &ndash; Access denied</h2>
+  <p>Your account role does not have permission to open this page.</p>
+  <a class="btn" href="{% url 'dashboard' %}">Go to my dashboard</a>
+</div>
+{% endblock %}
