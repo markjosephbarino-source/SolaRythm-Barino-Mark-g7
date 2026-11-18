@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}My Profile | SolaRythm{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="profile-head">
+    {% if user.profile_photo %}
+      <img class="avatar" src="{{ user.profile_photo.url }}" alt="Profile photo">
+    {% else %}
+      <div class="avatar"></div>
+    {% endif %}
+    <div>
+      <h2>{{ user.get_full_name|default:user.username }}</h2>
+      <span class="badge">{{ user.get_role_display }}</span>
+    </div>
+  </div>
+  <table>
+    <tr><th>Username</th><td>{{ user.username }}</td></tr>
+    <tr><th>Email</th><td>{{ user.email }}</td></tr>
+    <tr><th>First name</th><td>{{ user.first_name }}</td></tr>
+    <tr><th>Last name</th><td>{{ user.last_name }}</td></tr>
+    <tr><th>Contact number</th><td>{{ user.contact_number|default:"Not set" }}</td></tr>
+    <tr><th>Member since</th><td>{{ user.date_joined|date:"M d, Y" }}</td></tr>
+  </table>
+  <p><a class="btn" href="{% url 'profile_edit' %}">Edit profile</a></p>
+</div>
+{% endblock %}
